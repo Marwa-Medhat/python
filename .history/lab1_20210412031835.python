@@ -1,0 +1,211 @@
+#########################################problem1
+import math
+p1 = [4, 0]
+p2 = [6, 6]
+distance = math.sqrt( ((p1[0]-p2[0])**2)+((p1[1]-p2[1])**2) )
+print(distance)
+##########################################problem2
+def unique_list(l):
+  x = []
+  for a in l:
+    if a not in x:
+      x.append(a)
+  return x
+
+#print(unique_list([1,2,3,3,3,3,4,5]))
+print(unique_list([1,2,2,3,2]))
+
+###########################################problem 3
+def splitter(s):
+    mid = (len(s)+1)//2
+    return s[:mid], s[mid:]
+
+print(splitter("abcd"))
+
+print(splitter("abcde"))
+
+
+def front_back(a,b):
+    a_front, a_back = splitter(a)
+    b_front, b_back = splitter(b)
+    return "".join((a_front, b_front, a_back, b_back))
+
+print(front_back("abcd","abcde"))
+##################################33#############problem 4
+import sys, getopt
+from collections import Counter
+
+def main(argv):
+   inputfile = ''
+   outputfile = ''
+   count = 0;
+   word = "";
+   maxCount = 0;
+   words = [];
+
+   try:
+      opts, args = getopt.getopt(argv,"hi:o:",["ifile=","ofile="])
+   except getopt.GetoptError:
+      print ("lab1.py -i <inputfile> -o <outputfile>")
+      sys.exit(2)
+   for opt, arg in opts:
+      if opt in ("-i", "--ifile"):
+         inputfile = arg
+      if opt in ("-o", "--ofile"):
+         outputfile = arg
+   print ('Input file is ', inputfile)
+   print ('Output file is ', outputfile)
+	#opens the file. the with statement here will automatically close it afterwards.
+   with open(inputfile) as input_file:
+		#build a counter from each word in the file
+      count = Counter(word for line in input_file
+         for word in line.split())
+   li=list(count.most_common(20))
+   print(li)
+   f=open(outputfile,'w')
+   for ele in li:
+         f.write(str(ele[0])+'\n')
+
+   f.close()
+
+if __name__ == "__main__":
+   main(sys.argv[1:])
+###############################problem 5
+def remove_vowel(str):
+	vowels = ('a', 'e', 'i', 'o', 'u')
+	for x in str.lower():
+		if x in vowels:
+			str = str.replace(x, "")
+	print(str)
+remove_vowel("mobile")
+###############################problem 6
+def printString(str,char):
+	mylist = []
+	for i in range(0, len(str)):
+		if str[i] == char:
+			mylist.append(i)
+	return 	mylist
+print (printString("Google",'o'))
+############################### bonus
+import random
+import math
+# Taking Inputs
+#lower = int(input("Enter Lower bound:- "))
+lower=0
+# Taking Inputs
+#upper = int(input("Enter Upper bound:- "))
+upper=100
+trials=10
+# generating random number between
+# the lower and upper
+x = random.randint(lower, upper)
+print("\n\tYou've only ",
+		trials,
+	  " chances to guess the integer!\n")
+
+# Initializing the number of guesses.
+count = 0
+
+# for calculation of minimum number of
+# guesses depends upon range
+while count < 10:
+	count += 1
+
+	# taking guessing number as input
+	guess = int(input("Guess a number:- "))
+
+	# Condition testing
+	if x == guess:
+		print("Congratulations you did it in ",
+			  count, " try")
+		# Once guessed, loop will break
+		break
+	elif upper < guess:
+		count -= 1
+		print("that is not allowed")
+
+	elif x > guess:
+		print("You guessed too small!")
+	elif x < guess:
+		print("You Guessed too high!")
+
+# If Guessing is more than required guesses,
+# shows this output.
+if count >= math.log(upper - lower + 1, 2):
+	print("\nThe number is %d" % x)
+	print("\tBetter Luck Next time!")
+#############################  enumerate() function
+#The enumerate() function takes a collection (e.g. a tuple) and returns it as an enumerate object.
+#The enumerate() function adds a counter as the key of the enumerate object.
+#Syntax
+#enumerate(iterable, start)
+#Parameter    Values
+#Parameter 	Description
+#iterable 	  An iterable object
+#start 	    A Number. Defining the start number of the enumerate object. Default 0
+#Example
+#Convert a tuple into an enumerate object:
+x = ('apple', 'banana', 'cherry')
+y = enumerate(x)
+print(list(y))
+#Example
+cars = ['kia', 'audi', 'bmw']
+print(list(enumerate(cars, start = 1)))
+#Example
+str = "HelloWorld"
+print(list(enumerate(str)))
+################################## lambda function
+#A lambda function can take any number of arguments, but can only have one expression.
+#Syntax
+#lambda arguments : expression
+#Example
+#Add 10 to argument a, and return the result:
+x = lambda a : a + 10
+print(x(5))
+#Multiply argument a with argument b and return the result:
+x2 = lambda a, b : a * b
+print(x2(5, 6))
+#Summarize argument a, b, and c and return the result:
+x3 = lambda a, b, c : a + b + c
+print(x3(5, 6, 2))
+#Why Use Lambda Functions?
+#The power of lambda is better shown when you use them as an anonymous function inside another function.
+#Say you have a function definition that takes one argument, and that argument will be multiplied with an unknown number:
+def myfunc(n):
+  return lambda a : a * n
+mydoubler = myfunc(2)
+print(mydoubler(11))
+#Use lambda functions when an anonymous function is required for a short period of time.
+###################################################operator Module
+"""
+The operator Module
+
+The operator module supplies functions that are equivalent to Python’s operators.
+These functions are handy in cases where callables must be stored,
+passed as arguments, or returned as function results. The functions in operator
+have the same names as the corresponding special methods (covered in Special Methods).
+Each function is available with two names, with and without leading and trailing double underscores
+(e.g., both operator.add(a,b) and operator._ _add_ _(a,b) return a+b).
+abs abs(a) abs(a)
+add add(a,b) a+b
+and_ and_(a,b) a&b
+concat concat(a,b) a+b
+contains contains(a,b)	b in a
+getitem getitem(a,b) a[b]
+The operator module provides a “functional” interface to the standard operators in Python.
+The functions in this module can be used instead of some lambda constructs,
+when processing data with functions like map and filter.
+They are also quite popular among people who like to write obscure code, for obvious reasons.
+"""
+import operator
+import functools
+from functools import reduce
+
+sequence = 1, 2, 4
+print ("add", "=>", functools.reduce(operator.add, sequence))
+print ("sub", "=>", reduce(operator.sub, sequence))
+print ("mul", "=>", reduce(operator.mul, sequence))
+print ("concat", "=>", operator.concat("spam", "egg"))
+print ("getitem", "=>", operator.getitem(sequence, 2))
+print ("indexOf", "=>", operator.indexOf(sequence, 2))
+############################################
